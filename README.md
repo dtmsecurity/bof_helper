@@ -21,7 +21,15 @@ python3 bof_helper.py <API Method>
 **Example**
 
 ```bash
-# python3 bof_helper.py DsGetDcNameA
+python3 bof_helper.py DsGetDcNameA
+██████╗  ██████╗ ███████╗
+██╔══██╗██╔═══██╗██╔════╝
+██████╔╝██║   ██║█████╗
+██╔══██╗██║   ██║██╔══╝
+██████╔╝╚██████╔╝██║
+╚═════╝  ╚═════╝ ╚═╝
+BOF Helper by @dtmsecurity
+
 [Library] DsGetDcNameA is probably in NetApi32
 
 [Declaration] DWORD WINAPI DsGetDcNameA(LPCSTR, LPCSTR, GUID*, LPCSTR, ULONG, PDOMAIN_CONTROLLER_INFOA*);
