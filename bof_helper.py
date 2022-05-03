@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import glob
 import sys
 import requests
@@ -20,13 +21,23 @@ def find_declaration(method):
 def find_library(method):
         library = 0
         try:
-            ms_uri="https://docs.microsoft.com/api/search?search={}&scope=Desktop&locale=en-us&scoringprofile=search_for_en_us_a_b_test&%24filter=scopes%2Fany(t%3A%20t%20eq%20%27Desktop%27)&facet=category&%24top=1".format(method)
+            ms_uri="https://docs.microsoft.com/api/search?search={}&scope=Desktop&locale=en-us&%24filter=scopes%2Fany(t%3A%20t%20eq%20%27Desktop%27)&facet=category&%24top=1".format(method)
             ms_search = requests.get(ms_uri)
             doc_uri = ms_search.json()["results"][0]["url"]
             doc_request = requests.get(doc_uri)
             doc_content = doc_request.text
-
             lines = doc_content.split("\n")
+
+            if '<h2 id="functions">Functions</h2>' in doc_content:
+                for line in lines:
+                    if method in line:
+                        uri = line[line.find('href="') + 6:line[line.find('href="') + 6:].find('"') + 13]
+                        url = f"https://docs.microsoft.com{uri}"
+                        doc_request = requests.get(url)
+                        doc_content = doc_request.text
+                        lines = doc_content.split("\n")
+                        break
+
             i = 0
             for line in lines:
                     if "<td><strong>Library</strong></td>" in line:
